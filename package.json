@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ace-css": "^1.1.0",
+    "axios": "^0.16.0",
     "mathjs": "^3.11.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
