@@ -79,13 +79,22 @@ export const plot = (coord, geo, img) => {
   return { x, y }
 }
 
-export const plotPoints = (hole, round, shots, view, imgDim) => {
+export const makePath = ({ tee, pin, shots }) => {
+  let path = ''
+  const pts = [tee, ...shots, pin]
+  pts.forEach((d, i) => { path += `${i === 0 ? 'M' : ' L'}${d.x} ${d.y}` })
+  return path
+}
+
+export const plotHole = (hole, round, shots, view, imgDim) => {
     const { tee_x, tee_y, tee_z, pin_x, pin_y, pin_z } = round
     const geo = geoProps(getPositions(hole, view))
 
-    return {
+    const pts = {
       tee: plot({ x: tee_x, y: tee_y, z: tee_z }, geo, imgDim),
       pin: plot({ x: pin_x, y: pin_y, z: pin_z }, geo, imgDim),
-      shots: shots.map(s => plot(s, geo, imgDim)),
+      shots: shots.filter(s => !s.cup).map(s => plot(s, geo, imgDim)),
     }
+
+    return { ...pts, path: makePath(pts) }
 }
