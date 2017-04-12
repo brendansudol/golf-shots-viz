@@ -9,7 +9,7 @@ const getImg = (num, view) => {
   return `${process.env.PUBLIC_URL}/data/tourneys/1/course/holes/${holeNum}_${view}.jpg`
 }
 
-const Hole = ({ data, holeNum, playerId, view }) => {
+const Hole = ({ data, holeNum, playerId, view, toggleView }) => {
   const { courses, players } = data.leaderboard
   
   const { course_name, holes } = courses[0]
@@ -42,6 +42,16 @@ const Hole = ({ data, holeNum, playerId, view }) => {
           <circle cx={tee.x} cy={tee.y} r='3' fill='#fff' />
           <circle cx={pin.x} cy={pin.y} r='3' fill='#000' />
         </svg>
+        <div className='absolute left-0 top-0 p1'>
+          <button
+            type='button'
+            className='btn btn-small btn-primary bg-black h5'
+            style={{ width: 28 }}
+            onClick={toggleView}
+          >
+            {view === 'full' ? '+' : '-'}
+          </button>
+        </div>
       </div>
       <div>
         {shots.map((s, i) => (

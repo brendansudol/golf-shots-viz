@@ -16,7 +16,12 @@ const players = [
 ]
 
 class Main extends Component {
-  state = { data: null, holeNum: 0, playerId: '27649', view: 'full' }
+  state = {
+    data: null,
+    holeNum: 0,
+    playerId: '27649',
+    view: 'full',
+  }
 
   componentDidMount() {
     fetch(`${process.env.PUBLIC_URL}/data/tourneys/1/summary.json`)
@@ -29,8 +34,15 @@ class Main extends Component {
     this.setState({ [name]: value })
   }
 
+  toggleView = () => {
+    this.setState(prevState => {
+      const view = prevState.view === 'full' ? 'green' : 'full'
+      return { view }
+    })
+  }
+
   render() {
-    const { data, holeNum, playerId, view } = this.state
+    const { data, holeNum, playerId } = this.state
 
     return (
       <div className='p2'>
@@ -53,17 +65,12 @@ class Main extends Component {
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
-        <select
-          name='view'
-          onChange={this.handleChange}
-          value={view}
-        >
-          <option>full</option>
-          <option>green</option>
-        </select>
         {!data
           ? <div>Loading...</div>
-          : <Hole {...this.state} />
+          : <Hole
+              toggleView={this.toggleView}
+              {...this.state}
+            />
         }
       </div>
     )
