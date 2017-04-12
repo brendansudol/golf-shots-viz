@@ -2,6 +2,11 @@ import { inv, matrix, multiply } from 'mathjs'
 
 const { abs, asin, atan2, cos, pow, sin, sqrt, tan, PI } = Math
 
+export const holeImg = (num, view='full') => {
+  const holeNum = `${+num < 9 ? '0' : ''}${+num + 1}`
+  return `${process.env.PUBLIC_URL}/data/tourneys/1/course/holes/${holeNum}_${view}.jpg`
+}
+
 export const fullPositions = hole => ({
   fov: +hole.hole_fov,
   roll: +hole.hole_roll,

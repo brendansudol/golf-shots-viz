@@ -1,13 +1,8 @@
 import React from 'react'
 
-import { plotHole } from '../golf'
+import { holeImg, plotHole } from '../golf'
 
 const IMG_DIM = { w: 720, h: 327 }
-
-const getImg = (num, view) => {
-  const holeNum = `${+num < 9 ? '0' : ''}${+num + 1}`
-  return `${process.env.PUBLIC_URL}/data/tourneys/1/course/holes/${holeNum}_${view}.jpg`
-}
 
 const Hole = ({ data, holeNum, playerId, view, toggleView }) => {
   const { courses, players } = data.leaderboard
@@ -19,7 +14,7 @@ const Hole = ({ data, holeNum, playerId, view, toggleView }) => {
   const player = players.find(p => p.player_id === playerId)
   const { shots } = player.holes[holeNum]
 
-  const img = getImg(holeNum, view)
+  const img = holeImg(holeNum, view)
   const { tee, pin, shots: shotPts, path } = plotHole(hole, round, shots, view, IMG_DIM)
 
   return (
